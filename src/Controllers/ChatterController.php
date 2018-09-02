@@ -28,9 +28,10 @@ class ChatterController extends Controller
         $discussions = $discussions->paginate($pagination_results);
         
         $categories = Models::category()->get();
-        $categoriesMenu = Helper::categoriesMenu(array_filter($categories->toArray(), function ($item) {
-            return $item['parent_id'] === null;
-        }));
+      //  return $categories;
+    //   //  $categoriesMenu = Helper::categoriesMenu(array_filter($categories->toArray(), function ($item) {
+    //      //   return $item['parent_id'] === null;
+    //     }));
         
         $chatter_editor = config('chatter.editor');
         
@@ -39,7 +40,7 @@ class ChatterController extends Controller
             \App::register('GrahamCampbell\Markdown\MarkdownServiceProvider');
         }
         
-        return view('chatter::home', compact('discussions', 'categories', 'categoriesMenu', 'chatter_editor', 'current_category_id'));
+        return view('chatter::home', compact('discussions', 'categories', 'categories', 'chatter_editor', 'current_category_id'));
     }
     
     public function login()

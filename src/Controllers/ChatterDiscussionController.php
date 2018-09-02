@@ -118,6 +118,8 @@ class ChatterDiscussionController extends Controller
             $slug = $new_slug;
         }
 
+        
+
         $new_discussion = [
             'title'               => $request->title,
             'chatter_category_id' => $request->chatter_category_id,
@@ -133,6 +135,7 @@ class ChatterDiscussionController extends Controller
 
         $discussion = Models::discussion()->create($new_discussion);
 
+
         $new_post = [
             'chatter_discussion_id' => $discussion->id,
             'user_id'               => $user_id,
@@ -144,9 +147,11 @@ class ChatterDiscussionController extends Controller
         endif;
 
         // add the user to automatically be notified when new posts are submitted
-        $discussion->users()->attach($user_id);
+       // $discussion->users()->attach($user_id); // here is the missing model and his was commented out for further update
+
 
         $post = Models::post()->create($new_post);
+
 
         if ($post->id) {
             Event::fire(new ChatterAfterNewDiscussion($request, $discussion, $post));

@@ -69,7 +69,8 @@ return [
     |
     */
 
-    'master_file_extend' => 'layouts.app',
+    'master_file_extend' => 'layouts.forums',
+
 
     /*
     |--------------------------------------------------------------------------

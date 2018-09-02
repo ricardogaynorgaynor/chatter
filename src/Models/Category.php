@@ -3,9 +3,10 @@
 namespace DevDojo\Chatter\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Traits\WebsiteId;
 class Category extends Model
 {
+    use WebsiteId;
     protected $table = 'chatter_categories';
     public $timestamps = true;
     public $with = 'parents';

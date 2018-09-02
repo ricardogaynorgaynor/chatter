@@ -26,6 +26,7 @@ $authMiddleware = function ($accessor) use ($middleware) {
  */
 Route::group([
     'as'         => 'chatter.',
+    'feature-id' => 'discussion-forum',
     'prefix'     => $route('home'),
     'middleware' => $middleware('global', 'web'),
     'namespace'  => 'DevDojo\Chatter\Controllers',
@@ -212,6 +213,7 @@ Route::group([
  */
 Route::get($route('home').'.atom', [
     'as'         => 'chatter.atom',
+    'feature-id' => 'forum',
     'uses'       => 'DevDojo\Chatter\Controllers\ChatterAtomController@index',
     'middleware' => $middleware('home'),
 ]);

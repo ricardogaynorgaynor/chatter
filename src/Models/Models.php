@@ -7,9 +7,10 @@
  */
 
 namespace DevDojo\Chatter\Models;
-
+use App\Traits\WebsiteId;
 class Models
 {
+    use WebsiteId;
     /**
      * Map for the models.
      *

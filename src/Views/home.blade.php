@@ -19,16 +19,15 @@
 
 <div id="chatter" class="chatter_home">
 
-	<div id="chatter_hero">
-		<div id="chatter_hero_dimmer"></div>
-		<?php $headline_logo = Config::get('chatter.headline_logo'); ?>
-		@if( isset( $headline_logo ) && !empty( $headline_logo ) )
-			<img src="{{ Config::get('chatter.headline_logo') }}">
-		@else
-			<h1>@lang('chatter::intro.headline')</h1>
-			<p>@lang('chatter::intro.description')</p>
-		@endif
-	</div>
+		<section id="hero_in" class="general" style="height:400px;">
+				<div class="wrapper">
+					<div class="container">
+						<h1 class="fadeInUp"><span></span>Weccome to our forum</h1>
+						<p>Chat with lectures, course admins and students on the go.</p>
+					</div>
+				</div>
+		</section>
+
 
 	@if(config('chatter.errors'))
 		@if(Session::has('chatter_alert'))
@@ -60,7 +59,37 @@
 
 	    <div class="row">
 
-	    	<div class="col-md-3 left-column">
+				<div id="accordion_lessons" role="tablist" class="col-md-3 left-column add_bottom_45">
+						<button style="margin-bottom:20px;" class="btn btn-primary" id="new_discussion_btn"><i class="chatter-new"></i> @lang('chatter::messages.discussion.new')</button>
+						<div class="card">
+							<div class="card-header" role="tab" id="headingOne">
+								<h5 class="mb-0">
+									<a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="indicator ti-minus"></i> All Discussion</a>
+								</h5>
+							</div>
+
+							<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion_lessons">
+								<div class="card-body">
+									<div class="list_lessons">
+										<ul>
+											@foreach($categories as $category)
+											<li>
+												<?php  $menu = '<a href="/'.config('chatter.routes.home').'/'.config('chatter.routes.category').'/'.$category->slug.'">'; ?>
+												<?php echo  $menu."<i style='color:$category->color;' class='fa fa-square'></i>"." ".$category->name; ?></a>
+												<span>
+													
+												</span>
+											</li>
+											@endforeach
+
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+
+	    	{{-- <div class="col-md-3 left-column">
 	    		<!-- SIDEBAR -->
 	    		<div class="chatter_sidebar">
 					<button class="btn btn-primary" id="new_discussion_btn"><i class="chatter-new"></i> @lang('chatter::messages.discussion.new')</button>
@@ -68,7 +97,7 @@
           {!! $categoriesMenu !!}
 				</div>
 				<!-- END SIDEBAR -->
-	    	</div>
+	    	</div> --}}
 	        <div class="col-md-9 right-column">
 	        	<div class="panel">
 		        	<ul class="discussions">
@@ -76,6 +105,10 @@
 				        	<li>
 				        		<a class="discussion_list" href="/{{ Config::get('chatter.routes.home') }}/{{ Config::get('chatter.routes.discussion') }}/{{ $discussion->category->slug }}/{{ $discussion->slug }}">
 					        		<div class="chatter_avatar">
+					        			@if(file_exists($_SERVER['DOCUMENT_ROOT']."/uploads/profile-img/".$discussion->user->u_image))
+					        			<img src="{{ asset('uploads/profile-img/'.$discussion->user->u_image) }}" />
+					        			@else
+
 					        			@if(Config::get('chatter.user.avatar_image_database_field'))
 
 					        				<?php $db_field = Config::get('chatter.user.avatar_image_database_field'); ?>
@@ -93,6 +126,7 @@
 					        					{{ strtoupper(substr($discussion->user->{Config::get('chatter.user.database_field_with_user_name')}, 0, 1)) }}
 					        				</span>
 
+					        			@endif
 					        			@endif
 					        		</div>
 
